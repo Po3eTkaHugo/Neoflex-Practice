@@ -13,9 +13,9 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    /*@PostMapping("/create")
+    @PostMapping("/create")
     @ResponseStatus(HttpStatus.CREATED)
-    public TaskDto createTask(@RequestBody TaskDto taskDto) {
-        return taskService.createTask(taskDto);
-    }*/
+    public void createTask(@RequestBody TaskDto taskDto) {
+        taskService.createTask(taskDto);
+    }
 }
