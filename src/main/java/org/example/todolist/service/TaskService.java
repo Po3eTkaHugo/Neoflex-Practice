@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Comparator;
 import java.util.List;
-
-import static org.example.todolist.Constants.TO_DO;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,7 +32,7 @@ public class TaskService {
         task.setTitle(taskDto.getTitle());
         task.setDescription(taskDto.getDescription());
         task.setPriority(taskDto.getPriority());
-        task.setStatus(TO_DO);
+        task.setStatus(taskDto.getStatus());
         task.setUser(user);
 
         return toOutDto(taskRepository.save(task));
@@ -42,6 +41,19 @@ public class TaskService {
     @Transactional(readOnly = true)
     public List<TaskOutDto> getTasksByUserId(Long userId) {
         return taskRepository.findByUserId(userId).stream().sorted(Comparator.comparing(Task::getPriority)).map(this::toOutDto).toList();
+    }
+
+    @Transactional
+    public TaskOutDto updateTask(Long taskId, TaskDto newTask) {
+
+        Task task = taskRepository.findById(taskId).orElseThrow(() -> new RuntimeException("Task not found"));
+
+        Optional.ofNullable(newTask.getTitle()).ifPresent(task::setTitle);
+        Optional.ofNullable(newTask.getDescription()).ifPresent(task::setDescription);
+        Optional.ofNullable(newTask.getPriority()).ifPresent(task::setPriority);
+        Optional.ofNullable(newTask.getStatus()).ifPresent(task::setStatus);
+
+        return toOutDto(taskRepository.save(task));
     }
 
     @Transactional
@@ -55,6 +67,7 @@ public class TaskService {
         dto.setTitle(task.getTitle());
         dto.setDescription(task.getDescription());
         dto.setPriority(task.getPriority());
+        dto.setStatus(task.getStatus());
         dto.setUserId(task.getUser().getId());
 
         return dto;

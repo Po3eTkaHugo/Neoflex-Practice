@@ -28,6 +28,12 @@ public class TaskController {
         return taskService.getTasksByUserId(userId);
     }
 
+    @PatchMapping("/{taskId}")
+    @ResponseStatus(HttpStatus.OK)
+    public TaskOutDto updateTask(@PathVariable Long taskId, @RequestBody TaskDto newTask) {
+        return taskService.updateTask(taskId, newTask);
+    }
+
     @DeleteMapping("/{taskId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteTask(@PathVariable Long taskId) {
