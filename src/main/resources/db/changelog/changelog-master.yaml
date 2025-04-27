@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: classpath:db/changelog/changelog-init.yaml
+  - include:
+      file: classpath:db/changelog/add-users.yaml

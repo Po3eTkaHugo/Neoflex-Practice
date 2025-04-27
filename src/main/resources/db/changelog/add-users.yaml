@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-users-1
+      author: Natalia
+      changes:
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: username
+                  value: "Ivan"
+              - column:
+                  name: email
+                  value: "ivan2003@mail.ru"
+              - column:
+                  name: created_at
+                  valueComputed: "NOW()"
+
+        - insert:
+            tableName: user
+            columns:
+              - column:
+                  name: username
+                  value: "Lena"
+              - column:
+                  name: email
+                  value: "elen@gmail.com"
+              - column:
+                  name: created_at
+                  valueComputed: "NOW()"
