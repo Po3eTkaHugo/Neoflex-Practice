@@ -16,7 +16,7 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public TaskOutDto createTask(@RequestBody TaskDto taskDto) {
         return taskService.createTask(taskDto);
@@ -28,7 +28,7 @@ public class TaskController {
         return taskService.getTasksByUserId(userId);
     }
 
-    @DeleteMapping("/delete/{taskId}")
+    @DeleteMapping("/{taskId}")
     @ResponseStatus(HttpStatus.OK)
     public void deleteTask(@PathVariable Long taskId) {
         taskService.deleteTask(taskId);
