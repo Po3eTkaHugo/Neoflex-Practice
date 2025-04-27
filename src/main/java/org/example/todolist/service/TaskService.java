@@ -10,6 +10,9 @@ import org.example.todolist.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
+import java.util.List;
+
 import static org.example.todolist.Constants.TO_DO;
 
 @Service
@@ -34,6 +37,11 @@ public class TaskService {
         task.setUser(user);
 
         return toOutDto(taskRepository.save(task));
+    }
+
+    @Transactional(readOnly = true)
+    public List<TaskOutDto> getTasksByUserId(Long userId) {
+        return taskRepository.findByUserId(userId).stream().sorted(Comparator.comparing(Task::getPriority)).map(this::toOutDto).toList();
     }
 
     @Transactional
